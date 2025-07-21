@@ -136,13 +136,13 @@ exports.getJob = async (req, res) => {
       });
     }
 
-    const applicationsCount = await Application.countDocuments({ job_id: jobId });
+    // const applicationsCount = await Application.countDocuments({ job_id: jobId });
 
     res.json({
       success: true,
       data: {
         ...job.toObject(),
-        applications_count: applicationsCount
+     
       }
     });
   } catch (error) {
@@ -161,18 +161,30 @@ exports.updateJob = async (req, res) => {
     const jobId = req.params.id;
     const updateData = req.body;
 
-    const job = await Job.findOneAndUpdate(
+
+    const job=await Job.findOneAndUpdate(
       { _id: jobId, provider_id: userId },
       updateData,
-      { new: true }
-    );
+      { new: true });
 
-    if (!job) {
-      return res.status(404).json({
-        success: false,
-        message: 'Job not found'
-      });
-    }
+      if(!job) {
+        return res.status(404).json({
+          success: false,
+          message: 'Job not found'
+        });
+      }
+    // const job = await Job.findOneAndUpdate(
+    //   { _id: jobId, provider_id: userId },
+    //   updateData,
+    //   { new: true }
+    // );
+
+    // if (!job) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: 'Job not found'
+    //   });
+    // }
 
     res.json({
       success: true,
