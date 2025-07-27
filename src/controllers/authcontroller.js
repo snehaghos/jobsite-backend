@@ -14,6 +14,8 @@ exports.register = async (req, res) => {
   const accessToken = generateAccessToken(user);
   const refreshToken = generateRefreshToken(user);
 
+  
+
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: true,

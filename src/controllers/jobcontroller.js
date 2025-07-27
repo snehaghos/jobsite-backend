@@ -2,7 +2,7 @@ const Job = require("../models/job");
 
 exports.createJob = async (req, res) => {
   try {
-    const userId = req.user._id; // ✅ FIXED
+    const userId = req.user._id; 
     const {
       name,
       description,
