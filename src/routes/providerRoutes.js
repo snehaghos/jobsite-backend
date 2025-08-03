@@ -6,6 +6,6 @@ const upload = require("../middlewares/multer");
 const router = express.Router();
 
 router.get("/profile", protect, authorize("jobprovider"), getProfile);
-router.put("/profile", protect, authorize("jobprovider"), upload.single("logo"), updateProfile);
+router.put("/updateprofile", protect, authorize("jobprovider"), upload.single("logo"), updateProfile);
 
 module.exports = router;
