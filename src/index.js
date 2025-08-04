@@ -22,6 +22,11 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(cors({
+  origin: 'http://localhost:3000', // your Next.js frontend URL
+  credentials: true // if using cookies
+}));
+
 // app.use(appMiddleware);
 app.use(express.json());
 app.use(cookieParser());
