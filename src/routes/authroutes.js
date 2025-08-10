@@ -1,12 +1,13 @@
 const express = require("express");
-const {register, login, logout} = require("../controllers/authcontroller.js");
-const {protect} = require("../middlewares/authmiddleware.js");
-const {authorizeRoles} = require("../middlewares/rolemiddleware.js");
+const { register, login, logout } = require("../controllers/authcontroller.js");
+const { protect } = require("../middlewares/authmiddleware.js");
+const { authorizeRoles } = require("../middlewares/rolemiddleware.js");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.js");
-const {generateAccessToken} = require("../utils/generateToken.js");
+const { generateAccessToken } = require("../utils/generateToken.js");
 
 const router = express.Router();
+
 
 
 router.post("/refresh-token", async (req, res) => {
