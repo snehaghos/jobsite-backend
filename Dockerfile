@@ -12,7 +12,7 @@ COPY . /app/sneha
 
 RUN npm ci
 
-EXPOSE 5000
+EXPOSE 6008
 
 CMD [ "npm","run","dev" ]
 

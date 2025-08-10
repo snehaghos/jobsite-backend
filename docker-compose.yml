@@ -3,6 +3,8 @@ services:
     container_name: jobsite
     image: mongo:4.4
     restart: always
+    ports:
+      - 27017:27017
     volumes: 
       - jobsite:/data/db
   
@@ -10,11 +12,11 @@ services:
     container_name: express_api
     build: .
     ports:
-      - 5000:7009
+      - 6008:6008
     environment:
-      PORT: 5000
+      PORT: 6008
       MONGO_URI: mongodb://jobsite:27017
-      DB_NAME: jobsiteBackend
+      DB_NAME: jobsitedb
       NAME: jobsiteapi
       JWT_SECRET_ACCESS: l4@fA8jfn29hff93hA88d9n1L9hDfjF9DncNX90dMdf!
       JWT_SECRET_REFRESH: l4@fA8jfn29hff93hA88d9n1L9hD83n1Nnf90dMdf!
