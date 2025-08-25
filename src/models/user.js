@@ -15,7 +15,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["admin", "jobseeker", "jobprovider"],
     default: "jobseeker"
-  }
+  },
+  status:{ type: String, enum: ["active","inactive", "blocked"], default: "active"},
+  joinedAt: { type: Date, default: Date.now }
 }, { timestamps: true });
 
 userSchema.pre("save", async function (next) {
