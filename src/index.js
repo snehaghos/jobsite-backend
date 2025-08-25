@@ -6,6 +6,7 @@ const connectDB = require("./config/db.js");
 const authRoutes = require("./routes/authroutes.js");
 const providerRoutes = require("./routes/providerRoutes");
 const jobRoutes = require("./routes/jobRoutes");
+const userRoutes = require("./routes/userroutes");
 
 dotenv.config();
 connectDB();
@@ -39,6 +40,7 @@ app.use("/health", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", userRoutes);
 app.use("/api/providers", providerRoutes);
 app.use("/api/jobs", jobRoutes);
 

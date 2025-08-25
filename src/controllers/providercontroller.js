@@ -1,5 +1,13 @@
 const JobProvider = require("../models/provider");
 
+exports.getAllProviders = async (req, res) => {
+  const providers = await JobProvider.find().populate("user_id", "name email");
+  res.json({
+    success: true,
+    data: providers
+  }); 
+};
+
 exports.getProfile = async (req, res) => {
   const profile = await JobProvider.findOne({ user_id: req.user._id }).populate("user_id", "name email"); 
 
