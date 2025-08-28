@@ -122,6 +122,46 @@ exports.getJobs = async (req, res) => {
 };
 
 
+// Job Controller
+
+// 1. Provider’s Jobs
+exports.getMyJobs = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const jobs = await Job.find({ provider_id: userId }).sort({ created_at: -1 });
+
+    res.json({
+      success: true,
+      data: jobs
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message
+    });
+  }
+};
+
+// All Jobs (for seekers&adsmin too)
+exports.getAllJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find().populate("provider_id", "name email"); 
+    res.json({
+      success: true,
+      data: jobs
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message
+    });
+  }
+};
+
+
+
 // Get Specific Job
 exports.getJob = async (req, res) => {
   try {

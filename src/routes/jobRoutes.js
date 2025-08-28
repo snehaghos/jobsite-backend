@@ -1,7 +1,8 @@
 const express = require("express");
 const {
   createJob,
-  getJobs,
+  getAllJobs,
+  getMyJobs,
   getJob,
   updateJob,
   deleteJob
@@ -12,8 +13,12 @@ const { protect, authorize } = require("../middlewares/authmiddleware");
 const router = express.Router();
 
 router.post("/", protect, authorize("jobprovider"), createJob);
-router.get("/", protect, authorize("jobprovider"), getJobs);
-router.get("/:id", protect, authorize("jobprovider"), getJob);
+
+
+router.get("/myjobs", protect, authorize("jobprovider"), getMyJobs);
+router.get("/", protect, getAllJobs); 
+
+router.get("/:id", protect, getJob);
 router.put("/:id", protect, authorize("jobprovider"), updateJob)
 router.delete("/:id", protect, authorize("jobprovider"), deleteJob);
 
