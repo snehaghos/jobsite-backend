@@ -1,0 +1,23 @@
+const mongoose = require("mongoose");
+
+const jobSeekerSchema = new mongoose.Schema({
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, unique: true },
+  contact_no: { type: String, required: true, unique: true },
+  first_name: { type: String, required: true },
+  middle_name: { type: String },
+  last_name: { type: String, required: true },
+  resume_path: { type: String, required: true },
+  resume_link: { type: String, required: true },
+  address: { type: String, required: true },
+  skills: { type: String },
+  image: { type: String },
+  country: { type: String },
+  secondary_experience: { type: String },
+  highersecondary_experience: { type: String },
+  cgpa: { type: String },
+  experience_year: { type: String },
+  additional_link: { type: String },
+  dob: { type: Date },
+}, { timestamps: true });
+
+module.exports = mongoose.model("JobSeeker", jobSeekerSchema);
