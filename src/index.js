@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db.js");
 const authRoutes = require("./routes/authroutes.js");
 const providerRoutes = require("./routes/providerRoutes");
+const jobSeekerRoutes = require("./routes/jobseekerroutes");
 const jobRoutes = require("./routes/jobRoutes");
 const userRoutes = require("./routes/userroutes");
 const applicationRoutes = require("./routes/applicationRoutes");
@@ -44,6 +45,7 @@ app.use("/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", userRoutes);
 app.use("/api/providers", providerRoutes);
+app.use("/api/jobseekers", jobSeekerRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/saved-jobs", savedJobRoutes);
