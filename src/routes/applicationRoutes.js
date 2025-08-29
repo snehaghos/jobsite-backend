@@ -12,6 +12,6 @@ const router = express.Router();
 // Application routes - for jobseekers only
 router.get("/", protect, authorize("jobseeker"), getMyApplications);
 router.get("/:id", protect, authorize("jobseeker"), getApplicationById);
-router.post("/", protect, authorize("jobseeker"), applyForJob);
+router.post("/:id", protect, authorize("jobseeker"), applyForJob);
 
 module.exports = router;
