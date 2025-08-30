@@ -125,3 +125,96 @@ exports.updateProfile = async (req, res) => {
     });
   }
 };
+
+// GENERATE RESUME based on profile
+exports.generateResume = async (req, res) => {
+  try {
+    console.log("=== GENERATE RESUME REQUEST ===");
+    console.log("User ID:", req.user?._id);
+    
+    // Get the jobseeker profile
+    const profile = await JobSeeker.findOne({ user_id: req.user._id }).populate("user_id", "name email");
+
+    if (!profile) {
+      return res.status(404).json({
+        success: false,
+        message: "Profile not found. Please create your profile first."
+      });
+    }
+
+    // Check if profile has minimum required data
+    const requiredFields = ['contact_no', 'first_name', 'last_name', 'address', 'skills'];
+    const missingFields = requiredFields.filter(field => !profile[field] || profile[field].trim() === '');
+    
+    if (missingFields.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: `Please complete your profile. Missing: ${missingFields.join(', ')}`
+      });
+    }
+
+    // For now, return a simple text-based resume
+    // In a real application, you might use a PDF generator like puppeteer or pdfkit
+    const user = profile.user_id || {};
+    
+    const resumeContent = `
+RESUME
+======
+
+Personal Information:
+--------------------
+Name: ${profile.first_name} ${profile.middle_name ? profile.middle_name + ' ' : ''}${profile.last_name}
+Email: ${user.email}
+Phone: ${profile.contact_no}
+Address: ${profile.address}
+${profile.country ? `Country: ${profile.country}` : ''}
+${profile.dob ? `Date of Birth: ${new Date(profile.dob).toLocaleDateString()}` : ''}
+
+Skills:
+-------
+${profile.skills}
+
+Education:
+----------
+${profile.secondary_experience ? `Secondary Education: ${profile.secondary_experience}` : ''}
+${profile.highersecondary_experience ? `Higher Secondary Education: ${profile.highersecondary_experience}` : ''}
+${profile.cgpa ? `CGPA: ${profile.cgpa}` : ''}
+
+Experience:
+-----------
+${profile.experience_year ? `Experience: ${profile.experience_year}` : 'No experience specified'}
+
+Additional Information:
+----------------------
+${profile.availability ? `Availability: ${profile.availability}` : ''}
+${profile.additional_link ? `Portfolio/Link: ${profile.additional_link}` : ''}
+
+Generated on: ${new Date().toLocaleDateString()}
+    `;
+
+    // In a real implementation, you would:
+    // 1. Generate a PDF using a library like puppeteer
+    // 2. Save it to a file
+    // 3. Return the file URL
+    
+    // For now, we'll return the text content and a placeholder URL
+    console.log("Resume generated successfully for user:", req.user._id);
+    
+    res.json({
+      success: true,
+      message: "Resume generated successfully",
+      data: {
+        resume_url: `data:text/plain;charset=utf-8,${encodeURIComponent(resumeContent)}`,
+        content: resumeContent
+      }
+    });
+
+  } catch (error) {
+    console.error("Error generating resume:", error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Server error while generating resume", 
+      error: error.message 
+    });
+  }
+};

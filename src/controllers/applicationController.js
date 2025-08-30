@@ -163,3 +163,25 @@ exports.getApplicationById = async (req, res) => {
     });
   }
 };
+
+// Get job IDs that the user has already applied for
+exports.getAppliedJobIds = async (req, res) => {
+  try {
+    const jobseeker_id = req.user._id;
+
+    const applications = await Application.find({ jobseeker_id }).select('job_id');
+    const appliedJobIds = applications.map(app => app.job_id.toString());
+
+    res.json({
+      success: true,
+      data: appliedJobIds
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
