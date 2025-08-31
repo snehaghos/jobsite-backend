@@ -5,6 +5,7 @@ const {
   updateProfile
 } = require("../controllers/jobseekercontroller");
 const { protect, authorize } = require("../middlewares/authmiddleware");
+const upload = require("../middlewares/multer");
 
 const router = express.Router();
 
@@ -13,6 +14,5 @@ const router = express.Router();
 
 // Jobseeker self profile
 router.get("/me", protect, authorize("jobseeker"), getProfile);
-router.put("/me", protect, authorize("jobseeker"), updateProfile);
-
+router.put("/me", protect, authorize("jobseeker"), upload.single("image"), updateProfile);
 module.exports = router;
