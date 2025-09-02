@@ -6,7 +6,7 @@ exports.createJob = async (req, res) => {
     const {
       name,
       description,
-      job_type,
+      job_type='full-time',
       address,
       requirement,
       min_salary,
