@@ -19,5 +19,4 @@ router.put("/me", protect, authorize("jobseeker"), upload.single("image"), updat
 
 // Resume generation
 router.post("/generate-resume", protect, authorize("jobseeker"), generateResume);
-
 module.exports = router;
