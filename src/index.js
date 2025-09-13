@@ -19,6 +19,7 @@ const app = express();
 const allowedOrigins = [
 "http://localhost:3000",
   "https://jobsite-api.wishalpha.com",
+  "https://hirely.wishalpha.com"
 ];
 
 app.use((req, res, next) => {
